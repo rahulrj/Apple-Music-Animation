@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector>
+    <bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/ball"/>
+    <bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/trail"/>
+    <bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/box"/>
+    <bitmap xmlns:android="http://schemas.android.com/apk/res/android" android:src="@drawable/ground"/>
+</selector>
+

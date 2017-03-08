@@ -1,0 +1,52 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context=".MainActivity" android:background="@color/background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:id="@+id/layout_body">
+
+        <android.opengl.GLSurfaceView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" android:id="@+id/game_canvas" />
+        <TextView android:text="Text" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/frame_rate"
+            android:translationX="7pt" android:translationY="6pt" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset"
+            android:id="@+id/reset_button"
+            android:textSize="5pt"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time"
+            android:id="@+id/time_button"
+            android:textSize="5pt"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/reset_button"
+            android:layout_toStartOf="@+id/reset_button" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type"
+            android:id="@+id/spawntype_button"
+            android:textSize="5pt"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/time_button"
+            android:layout_toStartOf="@+id/time_button" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
