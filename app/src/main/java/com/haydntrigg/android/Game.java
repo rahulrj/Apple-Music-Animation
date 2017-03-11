@@ -57,7 +57,7 @@ public class Game {
         Parent = parent;
         textView = (TextView)Parent.findViewById(R.id.frame_rate);
 
-        b2World = new World(new Vec2(0.0f,-9.81f));
+        b2World = new World(new Vec2(10.0f,0f));
     }
 
     private void Reset()
@@ -108,17 +108,18 @@ public class Game {
     {
         Vec2 v = velocity == null ? new Vec2() : velocity;
 
+        //Vec2 v=new Vec2(0.002f,0.001f);
         BodyDef bodyDef = new BodyDef();
 
         bodyDef.position = position;
         bodyDef.angle = 0.0f;
-        bodyDef.linearVelocity = v;
+        //bodyDef.linearVelocity = v;
         bodyDef.angularVelocity = 0.0f;
         bodyDef.fixedRotation = false;
         bodyDef.active = true;
         bodyDef.bullet = false;
         bodyDef.allowSleep = true;
-        bodyDef.gravityScale = 1.0f;
+        bodyDef.gravityScale = 0.05f;
         bodyDef.linearDamping = 0.0f;
         bodyDef.angularDamping = 0.0f;
         bodyDef.userData = (Object)ObjectType.Ball;
