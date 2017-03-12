@@ -54,6 +54,8 @@ public class Game {
 
     ObjectType SpawnType = ObjectType.Box;
 
+    List<Body> mCirclesList = new ArrayList<>();
+
     Game(MainActivity parent) {
         Parent = parent;
         textView = (TextView) Parent.findViewById(R.id.frame_rate);
@@ -64,11 +66,11 @@ public class Game {
     private void Reset() {
         for (Body b = b2World.getBodyList(); b != null; b = b.getNext()) b2World.destroyBody(b);
         //CreateFloor(new Vec2(6.5f, 1f));
-       // CreateBox(new Vec2(6.5f, 2.55f));
+        // CreateBox(new Vec2(6.5f, 2.55f));
         //CreateBox(new Vec2(6.0f, 1.55f));
         //CreateBox(new Vec2(7.0f, 1.55f));
         createBallsOnTheLeftSide();
-        createBallsOnTheRightSide();
+        //createBallsOnTheRightSide();
 
         //CreateBall(new Vec2(10.0f, 5.0f), new Vec2(-7.5f, -5.5f));
     }
@@ -109,37 +111,64 @@ public class Game {
         //CreateBall(new Vec2(19.1f, 8.5f), null);
     }
 
-    private void CreateBox(Vec2 position) {
-        BodyDef bodyDef = new BodyDef();
+//    private void update() {
+//        b2World.step(1 / 30, 10, 10);
+//        b2World.clearForces();
+//        for (int i = 0; i < debrisVector.length; i++) {
+//            var debrisPosition:b2Vec2 = debrisVector[i].GetWorldCenter();
+//            for (var j :int=0;
+//            j<planetVector.length ;
+//            j++){
+//                var planetShape:b2CircleShape = planetVector[j].GetFixtureList().GetShape()
+//                as b2CircleShape;
+//                var planetRadius:Number = planetShape.GetRadius();
+//                var planetPosition:b2Vec2 = planetVector[j].GetWorldCenter();
+//                var planetDistance:b2Vec2 = new b2Vec2(0, 0);
+//                planetDistance.Add(debrisPosition);
+//                planetDistance.Subtract(planetPosition);
+//                var finalDistance:Number = planetDistance.Length();
+//                if (finalDistance <= planetRadius * 3) {
+//                    planetDistance.NegativeSelf();
+//                    var vecSum:Number = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
+//                    planetDistance.Multiply((1 / vecSum) * planetRadius / finalDistance);
+//                    debrisVector[i].ApplyForce(planetDistance, debrisVector[i].GetWorldCenter());
+//                }
+//            }
+//        }
+//        world.DrawDebugData();
+//    }
 
-        bodyDef.position = position;
-        bodyDef.angle = 0.0f;
-        bodyDef.linearVelocity = new Vec2(0.0f, 0.0f);
-        bodyDef.angularVelocity = 0.0f;
-        bodyDef.fixedRotation = false;
-        bodyDef.active = true;
-        bodyDef.bullet = false;
-        bodyDef.allowSleep = true;
-        bodyDef.gravityScale = 1.0f;
-        bodyDef.linearDamping = 0.0f;
-        bodyDef.angularDamping = 0.0f;
-        bodyDef.userData = (Object) ObjectType.Box;
-        bodyDef.type = BodyType.DYNAMIC;
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.5f, 0.5f);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.userData = null;
-        fixtureDef.friction = 0.35f;
-        fixtureDef.restitution = 0.05f;
-        fixtureDef.density = 0.75f;
-        fixtureDef.isSensor = false;
-
-        Body body = b2World.createBody(bodyDef);
-        body.createFixture(fixtureDef);
-    }
+//    private void CreateBox(Vec2 position) {
+//        BodyDef bodyDef = new BodyDef();
+//
+//        bodyDef.position = position;
+//        bodyDef.angle = 0.0f;
+//        bodyDef.linearVelocity = new Vec2(0.0f, 0.0f);
+//        bodyDef.angularVelocity = 0.0f;
+//        bodyDef.fixedRotation = false;
+//        bodyDef.active = true;
+//        bodyDef.bullet = false;
+//        bodyDef.allowSleep = true;
+//        bodyDef.gravityScale = 1.0f;
+//        bodyDef.linearDamping = 0.0f;
+//        bodyDef.angularDamping = 0.0f;
+//        bodyDef.userData = (Object) ObjectType.Box;
+//        bodyDef.type = BodyType.DYNAMIC;
+//
+//        PolygonShape shape = new PolygonShape();
+//        shape.setAsBox(0.5f, 0.5f);
+//
+//        FixtureDef fixtureDef = new FixtureDef();
+//        fixtureDef.shape = shape;
+//        fixtureDef.userData = null;
+//        fixtureDef.friction = 0.35f;
+//        fixtureDef.restitution = 0.05f;
+//        fixtureDef.density = 0.75f;
+//        fixtureDef.isSensor = false;
+//
+//        Body body = b2World.createBody(bodyDef);
+//        body.createFixture(fixtureDef);
+//    }
 
 
     private void CreateBall(Vec2 position, @Nullable Vec2 velocity) {
@@ -181,42 +210,42 @@ public class Game {
 
         Body body = b2World.createBody(bodyDef);
         body.createFixture(fixtureDef);
+        mCirclesList.add(body);
     }
 
-    private void CreateFloor(Vec2 position) {
-        BodyDef bodyDef = new BodyDef();
-
-        bodyDef.position = position;
-        bodyDef.angle = 0.0f;
-        bodyDef.linearVelocity = new Vec2(0.0f, 0.0f);
-        bodyDef.angularVelocity = 0.0f;
-        bodyDef.fixedRotation = false;
-        bodyDef.active = true;
-        bodyDef.bullet = false;
-        bodyDef.allowSleep = true;
-        bodyDef.gravityScale = 1.0f;
-        bodyDef.linearDamping = 0.0f;
-        bodyDef.angularDamping = 0.0f;
-        bodyDef.userData = (Object) ObjectType.Floor;
-        bodyDef.type = BodyType.KINEMATIC;
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(5.0f, 0.05f);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.userData = null;
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.05f;
-        fixtureDef.density = 1.0f;
-        fixtureDef.isSensor = false;
-
-        Body body = b2World.createBody(bodyDef);
-        body.createFixture(fixtureDef);
-    }
+//    private void CreateFloor(Vec2 position) {
+//        BodyDef bodyDef = new BodyDef();
+//
+//        bodyDef.position = position;
+//        bodyDef.angle = 0.0f;
+//        bodyDef.linearVelocity = new Vec2(0.0f, 0.0f);
+//        bodyDef.angularVelocity = 0.0f;
+//        bodyDef.fixedRotation = false;
+//        bodyDef.active = true;
+//        bodyDef.bullet = false;
+//        bodyDef.allowSleep = true;
+//        bodyDef.gravityScale = 1.0f;
+//        bodyDef.linearDamping = 0.0f;
+//        bodyDef.angularDamping = 0.0f;
+//        bodyDef.userData = (Object) ObjectType.Floor;
+//        bodyDef.type = BodyType.KINEMATIC;
+//
+//        PolygonShape shape = new PolygonShape();
+//        shape.setAsBox(5.0f, 0.05f);
+//
+//        FixtureDef fixtureDef = new FixtureDef();
+//        fixtureDef.shape = shape;
+//        fixtureDef.userData = null;
+//        fixtureDef.friction = 0.5f;
+//        fixtureDef.restitution = 0.05f;
+//        fixtureDef.density = 1.0f;
+//        fixtureDef.isSensor = false;
+//
+//        Body body = b2World.createBody(bodyDef);
+//        body.createFixture(fixtureDef);
+//    }
 
     public void Init() {
-
 
         Square.InitSquare();
 
@@ -308,8 +337,33 @@ public class Game {
     }
 
     public void Update(float delta) {
-        if (IsSlow) b2World.step(delta * 0.2f, 20, 20);
-        else b2World.step(delta, 20, 20);
+        if (IsSlow) {
+            b2World.step(delta * 0.2f, 20, 20);
+        } else {
+            b2World.step(delta, 20, 20);
+        }
+
+        b2World.clearForces();
+        for (int i = 0; i < mCirclesList.length; i++) {
+            Vec2 debrisPosition = mCirclesList.get(i).getWorldCenter();
+            for (int j=0; j<planetVector.length ; j++){
+                var planetShape:b2CircleShape = planetVector[j].GetFixtureList().GetShape()
+                as b2CircleShape;
+                var planetRadius:Number = planetShape.GetRadius();
+                var planetPosition:b2Vec2 = planetVector[j].GetWorldCenter();
+                var planetDistance:b2Vec2 = new b2Vec2(0, 0);
+                planetDistance.Add(debrisPosition);
+                planetDistance.Subtract(planetPosition);
+                var finalDistance:Number = planetDistance.Length();
+                if (finalDistance <= planetRadius * 3) {
+                    planetDistance.NegativeSelf();
+                    var vecSum:Number = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
+                    planetDistance.Multiply((1 / vecSum) * planetRadius / finalDistance);
+                    debrisVector[i].ApplyForce(planetDistance, debrisVector[i].GetWorldCenter());
+                }
+            }
+        }
+
 
         for (Body b = b2World.getBodyList(); b != null; b = b.getNext()) {
             Vec2 position = b.getPosition();
@@ -327,10 +381,10 @@ public class Game {
                 Square.Color = DrawWhite;
                 switch ((ObjectType) body.getUserData()) {
                     case Box:
-                        boxSprite.Draw(body.getWorldCenter(), body.getAngle(), 1.05f / 94.0f, View);
+                        // boxSprite.Draw(body.getWorldCenter(), body.getAngle(), 1.05f / 94.0f, View);
                         break;
                     case Floor:
-                        groundSprite.Draw(body.getWorldCenter(), body.getAngle(), 1.05f / 100.0f, View);
+                        //groundSprite.Draw(body.getWorldCenter(), body.getAngle(), 1.05f / 100.0f, View);
                         break;
                     case Ball:
                         Vec2 position = body.getWorldCenter();
@@ -420,7 +474,7 @@ public class Game {
         if (e.getAction() == MotionEvent.ACTION_DOWN) {
             switch (SpawnType) {
                 case Box:
-                    CreateBox(new Vec2(13.0f * e.getX() / Width, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)));
+                    //CreateBox(new Vec2(13.0f * e.getX() / Width, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)));
                     break;
                 case Ball:
                     CreateBall(new Vec2(13.0f * e.getX() / Width, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)), null);
