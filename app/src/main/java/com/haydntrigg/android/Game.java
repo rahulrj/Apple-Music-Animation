@@ -63,19 +63,50 @@ public class Game {
 
     private void Reset() {
         for (Body b = b2World.getBodyList(); b != null; b = b.getNext()) b2World.destroyBody(b);
-        CreateFloor(new Vec2(6.5f, 1f));
-        CreateBox(new Vec2(6.5f, 2.55f));
-        CreateBox(new Vec2(6.0f, 1.55f));
-        CreateBox(new Vec2(7.0f, 1.55f));
+        //CreateFloor(new Vec2(6.5f, 1f));
+       // CreateBox(new Vec2(6.5f, 2.55f));
+        //CreateBox(new Vec2(6.0f, 1.55f));
+        //CreateBox(new Vec2(7.0f, 1.55f));
         createBallsOnTheLeftSide();
+        createBallsOnTheRightSide();
+
         //CreateBall(new Vec2(10.0f, 5.0f), new Vec2(-7.5f, -5.5f));
     }
 
     private void createBallsOnTheLeftSide() {
-        CreateBall(new Vec2(-1.0f, 8.0f), null);
+
+        CreateBall(new Vec2(-1.0f, 6.5f), null);
+        CreateBall(new Vec2(-3.5f, 6.6f), null);
+
+        CreateBall(new Vec2(-1.5f, 9.0f), null);
+        CreateBall(new Vec2(-3.9f, 9.0f), null);
+
+        CreateBall(new Vec2(-0.5f, 11.5f), null);
+        CreateBall(new Vec2(-3.4f, 11.6f), null);
+
+        CreateBall(new Vec2(-4.1f, 10.5f), null);
+//        CreateBall(new Vec2(-7.6f, 10.5f), null);
+//
+//        CreateBall(new Vec2(-4.5f, 9.0f), null);
+//        CreateBall(new Vec2(-5.0f, 11.5f), null);
+
+
 //        for (int i = 0; i < 2; i++) {
 //            CreateBall(new Vec2(-1.0f, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)), null);
 //        }
+    }
+
+    private void createBallsOnTheRightSide() {
+        CreateBall(new Vec2(14.0f, 9.5f), null);
+        CreateBall(new Vec2(16.5f, 9.2f), null);
+
+        CreateBall(new Vec2(14.1f, 6.2f), null);
+        CreateBall(new Vec2(16.6f, 6.0f), null);
+
+        CreateBall(new Vec2(14.1f, 11.5f), null);
+        CreateBall(new Vec2(16.8f, 11.6f), null);
+
+        //CreateBall(new Vec2(19.1f, 8.5f), null);
     }
 
     private void CreateBox(Vec2 position) {
