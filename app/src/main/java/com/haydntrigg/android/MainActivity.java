@@ -5,6 +5,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.Renderer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -128,6 +129,7 @@ public class MainActivity extends Activity implements Renderer {
     public void onDrawFrame(GL10 gl) {
         try
         {
+            //Log.d("RAHUL","DRAW");
             semaphore.acquire(1);
             if(lastTicks == -1) lastTicks = Calendar.getInstance().getTime().getTime();
             final float min_timestep = 1.0f / 100.0f;

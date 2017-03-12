@@ -5,7 +5,7 @@ import org.joml.Matrix4f;
 
 public class Sprite {
 
-    private Texture DrawTexture;
+    public Texture DrawTexture;
     public Sprite(Texture texture)
     {
         DrawTexture = texture;
