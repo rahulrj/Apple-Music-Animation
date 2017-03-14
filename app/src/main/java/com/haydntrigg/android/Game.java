@@ -55,12 +55,13 @@ public class Game {
     ObjectType SpawnType = ObjectType.Box;
 
     List<Body> mCirclesList = new ArrayList<>();
+    Body mPlanet = null;
 
     Game(MainActivity parent) {
         Parent = parent;
         textView = (TextView) Parent.findViewById(R.id.frame_rate);
 
-        b2World = new World(new Vec2(10.0f, 0f));
+        b2World = new World(new Vec2(0.0f, 0f));
     }
 
     private void Reset() {
@@ -70,7 +71,8 @@ public class Game {
         //CreateBox(new Vec2(6.0f, 1.55f));
         //CreateBox(new Vec2(7.0f, 1.55f));
         createBallsOnTheLeftSide();
-        //createBallsOnTheRightSide();
+        //createPlanet(new Vec2(7.0f, 10.0f), null);
+        createBallsOnTheRightSide();
 
         //CreateBall(new Vec2(10.0f, 5.0f), new Vec2(-7.5f, -5.5f));
     }
@@ -79,18 +81,18 @@ public class Game {
 
         CreateBall(new Vec2(-1.0f, 6.5f), null);
         CreateBall(new Vec2(-3.5f, 6.6f), null);
-
-        CreateBall(new Vec2(-1.5f, 9.0f), null);
+//
+        CreateBall(new Vec2(-1.0f, 9.0f), null);
         CreateBall(new Vec2(-3.9f, 9.0f), null);
-
+//
         CreateBall(new Vec2(-0.5f, 11.5f), null);
         CreateBall(new Vec2(-3.4f, 11.6f), null);
-
-        CreateBall(new Vec2(-4.1f, 10.5f), null);
-//        CreateBall(new Vec2(-7.6f, 10.5f), null);
 //
-//        CreateBall(new Vec2(-4.5f, 9.0f), null);
-//        CreateBall(new Vec2(-5.0f, 11.5f), null);
+        CreateBall(new Vec2(-4.1f, 10.5f), null);
+        CreateBall(new Vec2(-6.1f, 10.5f), null);
+
+        CreateBall(new Vec2(-6.1f, 11.6f), null);
+        CreateBall(new Vec2(-6.1f, 9.0f), null);
 
 
 //        for (int i = 0; i < 2; i++) {
@@ -102,13 +104,18 @@ public class Game {
         CreateBall(new Vec2(14.0f, 9.5f), null);
         CreateBall(new Vec2(16.5f, 9.2f), null);
 
-        CreateBall(new Vec2(14.1f, 6.2f), null);
+        CreateBall(new Vec2(16.5f, 6.2f), null);
         CreateBall(new Vec2(16.6f, 6.0f), null);
 
         CreateBall(new Vec2(14.1f, 11.5f), null);
         CreateBall(new Vec2(16.8f, 11.6f), null);
 
-        //CreateBall(new Vec2(19.1f, 8.5f), null);
+        CreateBall(new Vec2(19.1f, 11.5f), null);
+        CreateBall(new Vec2(19.1f, 6.2f), null);
+
+        CreateBall(new Vec2(19.1f, 9.55f), null);
+        CreateBall(new Vec2(19.1f, 9.2f), null);
+
     }
 
 //    private void update() {
@@ -176,24 +183,23 @@ public class Game {
 
         //Vec2 v=new Vec2(0.002f,0.001f);
         BodyDef bodyDef = new BodyDef();
-
         bodyDef.position = position;
-        bodyDef.angle = 0.0f;
+        //bodyDef.angle = 0.0f;
         //bodyDef.linearVelocity = v;
-        bodyDef.angularVelocity = 0.0f;
-        bodyDef.fixedRotation = false;
-        bodyDef.active = true;
-        bodyDef.bullet = false;
-        bodyDef.allowSleep = true;
-        if (position.x > 5.0f) {
-            bodyDef.gravityScale = -0.05f;
-        } else {
-            bodyDef.gravityScale = 0.05f;
-        }
+        // bodyDef.angularVelocity = 0.0f;
+        //bodyDef.fixedRotation = false;
+        //bodyDef.active = true;
+        //bodyDef.bullet = false;
+        //bodyDef.allowSleep = true;
+//        if (position.x > 5.0f) {
+//            bodyDef.gravityScale = -0.05f;
+//        } else {
+//            bodyDef.gravityScale = 0.05f;
+//        }
 
 
-        bodyDef.linearDamping = 0.0f;
-        bodyDef.angularDamping = 0.0f;
+        // bodyDef.linearDamping = 0.0f;
+        //bodyDef.angularDamping = 0.0f;
         bodyDef.userData = (Object) ObjectType.Ball;
         bodyDef.type = BodyType.DYNAMIC;
 
@@ -203,14 +209,48 @@ public class Game {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.userData = null;
-        fixtureDef.friction = 0.45f;
-        fixtureDef.restitution = 0.75f;
-        fixtureDef.density = 25.0f;
-        fixtureDef.isSensor = false;
+        fixtureDef.friction = 1.0f;
+        fixtureDef.restitution = 0f;
+        fixtureDef.density = 1.0f;
+
+        //fixtureDef.isSensor = false;
 
         Body body = b2World.createBody(bodyDef);
         body.createFixture(fixtureDef);
         mCirclesList.add(body);
+    }
+
+    private void createPlanet(Vec2 position, @Nullable Vec2 velocity) {
+        Vec2 v = velocity == null ? new Vec2() : velocity;
+
+        //Vec2 v=new Vec2(0.002f,0.001f);
+        BodyDef bodyDef = new BodyDef();
+
+        bodyDef.position = position;
+        // bodyDef.angle = 0.0f;
+        //bodyDef.linearVelocity = v;
+        //bodyDef.angularVelocity = 0.0f;
+        //bodyDef.fixedRotation = false;
+        //bodyDef.active = true;
+        //bodyDef.bullet = false;
+        //bodyDef.allowSleep = true;
+        //bodyDef.linearDamping = 0.0f;
+        //bodyDef.angularDamping = 0.0f;
+        bodyDef.userData = (Object) ObjectType.Ball;
+        //bodyDef.type = BodyType.DYNAMIC;
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(0.2f);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.userData = null;
+        fixtureDef.restitution = 0f;
+        fixtureDef.density = 1.0f;
+
+        Body body = b2World.createBody(bodyDef);
+        body.createFixture(fixtureDef);
+        mPlanet = body;
     }
 
 //    private void CreateFloor(Vec2 position) {
@@ -344,31 +384,32 @@ public class Game {
         }
 
         b2World.clearForces();
-        for (int i = 0; i < mCirclesList.length; i++) {
+        for (int i = 0; i < mCirclesList.size(); i++) {
             Vec2 debrisPosition = mCirclesList.get(i).getWorldCenter();
-            for (int j=0; j<planetVector.length ; j++){
-                var planetShape:b2CircleShape = planetVector[j].GetFixtureList().GetShape()
-                as b2CircleShape;
-                var planetRadius:Number = planetShape.GetRadius();
-                var planetPosition:b2Vec2 = planetVector[j].GetWorldCenter();
-                var planetDistance:b2Vec2 = new b2Vec2(0, 0);
-                planetDistance.Add(debrisPosition);
-                planetDistance.Subtract(planetPosition);
-                var finalDistance:Number = planetDistance.Length();
-                if (finalDistance <= planetRadius * 3) {
-                    planetDistance.NegativeSelf();
-                    var vecSum:Number = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
-                    planetDistance.Multiply((1 / vecSum) * planetRadius / finalDistance);
-                    debrisVector[i].ApplyForce(planetDistance, debrisVector[i].GetWorldCenter());
-                }
-            }
+            //CircleShape planetShape = (CircleShape) mPlanet.getFixtureList().getShape();
+            //float planetRadius = planetShape.getRadius();
+
+            //Vec2 planetPosition = mPlanet.getWorldCenter();
+            Vec2 planetPosition = new Vec2(7.0f, 10.0f);
+            Vec2 planetDistance = new Vec2(0, 0);
+            planetDistance.addLocal(debrisPosition);
+            planetDistance.subLocal(planetPosition);
+            float finalDistance = planetDistance.length();
+            //Log.d("RAHUL",""+finalDistance+" "+(planetRadius*3));
+
+            // if (finalDistance <= planetRadius * 3) {
+            planetDistance.negateLocal();
+            float vecSum = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
+            planetDistance.mulLocal(0.5f);
+            Log.d("RAHUL", planetDistance.toString());
+            mCirclesList.get(i).applyForce(planetDistance, mCirclesList.get(i).getWorldCenter());
         }
 
 
-        for (Body b = b2World.getBodyList(); b != null; b = b.getNext()) {
-            Vec2 position = b.getPosition();
-            if (position.y < -5 || position.x < -5 || position.x > 18) b2World.destroyBody(b);
-        }
+//        for (Body b = b2World.getBodyList(); b != null; b = b.getNext()) {
+//            Vec2 position = b.getPosition();
+//            if (position.y < -5 || position.x < -5 || position.x > 18) b2World.destroyBody(b);
+//        }
     }
 
     public void Draw() {
