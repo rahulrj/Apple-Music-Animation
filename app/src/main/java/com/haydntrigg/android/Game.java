@@ -80,19 +80,26 @@ public class Game {
     private void createBallsOnTheLeftSide() {
 
         CreateBall(new Vec2(-1.0f, 6.5f), null);
-        CreateBall(new Vec2(-3.5f, 6.6f), null);
-//
-        CreateBall(new Vec2(-1.0f, 9.0f), null);
-        CreateBall(new Vec2(-3.9f, 9.0f), null);
-//
-        CreateBall(new Vec2(-0.5f, 11.5f), null);
-        CreateBall(new Vec2(-3.4f, 11.6f), null);
-//
-        CreateBall(new Vec2(-4.1f, 10.5f), null);
-        CreateBall(new Vec2(-6.1f, 10.5f), null);
+        CreateBall(new Vec2(-3.0f, 6.6f), null);
+        CreateBall(new Vec2(-5.0f, 6.6f), null);
+        CreateBall(new Vec2(-7.0f, 6.6f), null);
+        CreateBall(new Vec2(-9.0f, 6.6f), null);
 
-        CreateBall(new Vec2(-6.1f, 11.6f), null);
-        CreateBall(new Vec2(-6.1f, 9.0f), null);
+//
+        CreateBall(new Vec2(-1.0f, 9.5f), null);
+        CreateBall(new Vec2(-3.0f, 9.5f), null);
+        CreateBall(new Vec2(-5.0f, 9.5f), null);
+        CreateBall(new Vec2(-7.0f, 9.5f), null);
+        CreateBall(new Vec2(-9.0f, 9.5f), null);
+//
+//        CreateBall(new Vec2(-0.5f, 11.5f), null);
+//        CreateBall(new Vec2(-3.4f, 11.6f), null);
+////
+//        CreateBall(new Vec2(-4.1f, 10.5f), null);
+//        CreateBall(new Vec2(-6.1f, 10.5f), null);
+//
+//        CreateBall(new Vec2(-6.1f, 11.6f), null);
+//        CreateBall(new Vec2(-6.1f, 9.0f), null);
 
 
 //        for (int i = 0; i < 2; i++) {
@@ -101,20 +108,26 @@ public class Game {
     }
 
     private void createBallsOnTheRightSide() {
-        CreateBall(new Vec2(14.0f, 9.5f), null);
-        CreateBall(new Vec2(16.5f, 9.2f), null);
+        CreateBall(new Vec2(14.0f, 6.5f), null);
+        CreateBall(new Vec2(16.0f, 6.5f), null);
+        CreateBall(new Vec2(18.0f, 6.5f), null);
+        CreateBall(new Vec2(20.0f, 6.5f), null);
+        CreateBall(new Vec2(22.0f, 6.5f), null);
 
-        CreateBall(new Vec2(16.5f, 6.2f), null);
-        CreateBall(new Vec2(16.6f, 6.0f), null);
+        CreateBall(new Vec2(14.0f, 9.0f), null);
+        CreateBall(new Vec2(16.0f, 9.0f), null);
+        CreateBall(new Vec2(18.0f, 9.0f), null);
+        CreateBall(new Vec2(20.0f, 9.0f), null);
+        CreateBall(new Vec2(22.0f, 9.0f), null);
 
-        CreateBall(new Vec2(14.1f, 11.5f), null);
-        CreateBall(new Vec2(16.8f, 11.6f), null);
-
-        CreateBall(new Vec2(19.1f, 11.5f), null);
-        CreateBall(new Vec2(19.1f, 6.2f), null);
-
-        CreateBall(new Vec2(19.1f, 9.55f), null);
-        CreateBall(new Vec2(19.1f, 9.2f), null);
+//        CreateBall(new Vec2(14.1f, 11.5f), null);
+//        CreateBall(new Vec2(16.8f, 11.6f), null);
+//
+//        CreateBall(new Vec2(19.1f, 11.5f), null);
+//        CreateBall(new Vec2(19.1f, 6.2f), null);
+//
+//        CreateBall(new Vec2(19.1f, 9.55f), null);
+//        CreateBall(new Vec2(19.1f, 9.2f), null);
 
     }
 
@@ -204,7 +217,7 @@ public class Game {
         bodyDef.type = BodyType.DYNAMIC;
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(1.2f);
+        shape.setRadius(1.3f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -430,7 +443,7 @@ public class Game {
                     case Ball:
                         Vec2 position = body.getWorldCenter();
                         // 0.5/1.05=0.4761 Now 1.2/0.4761=2.52
-                        ballSprite.Draw(position, body.getAngle(), 2.52f / 100.0f, View);
+                        ballSprite.Draw(position, body.getAngle(), 2.73f / 100.0f, View);
 //                        if (ballSprite.DrawTexture != null) {
 //                            Log.d("RAHUL", ballSprite.DrawTexture.GetWidth() * (1.05f / 100.0f) + " " + ballSprite.DrawTexture.GetHeight());
 //                        }
