@@ -412,32 +412,32 @@ public class Game {
             // if (finalDistance <= planetRadius * 3) {
             planetDistance.negateLocal();
             float vecSum = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
-            planetDistance.mulLocal(1.8f);
+            planetDistance.mulLocal(1.5f);
             if(entry.getKey()==6) {
-                if (finalDistance<5.0 && finalDistance>1.0) {
+                if (finalDistance<4.0 && finalDistance>3.0) {
                     Log.d("RAHUL1","YES");
                     //Vec2 impluse = new Vec2(0, 0.3f);
-                    Vec2 impulse=new Vec2(0,(float) (1.0/(finalDistance*2.0)));
+                    Vec2 impulse=new Vec2(0,(float) (1.0/(finalDistance*2.2)));
                     entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
             if(entry.getKey()==16) {
-                if (finalDistance<3.5 && finalDistance>2.0) {
-                    Vec2 impluse = new Vec2(0, 0.4f);
-                    entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
+                if (finalDistance<3.5 && finalDistance>2.5) {
+                    Vec2 impulse=new Vec2(0,(float) (1.0/(finalDistance*2.2)));
+                    entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
 
             if(entry.getKey()==1) {
-                if (finalDistance<4.5 && finalDistance>4.0) {
-                    Vec2 impluse = new Vec2(0, -0.3f);
-                    entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
+                if (finalDistance<4.0 && finalDistance>3.0) {
+                    Vec2 impulse=new Vec2(0,(float) (-1.0/(finalDistance*2.0)));
+                    entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
             if(entry.getKey()==11) {
-                if (finalDistance<3.5 && finalDistance>3.0) {
-                    Vec2 impluse = new Vec2(0, -0.4f);
-                    entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
+                if (finalDistance<3.5 && finalDistance>2.5) {
+                    Vec2 impulse=new Vec2(0,(float) (-1.0/(finalDistance*2.8)));
+                    entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
 
