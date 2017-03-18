@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 import com.haydntrigg.game.supersovietsheep.R;
 
+import org.jbox2d.callbacks.ContactImpulse;
+import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.Manifold;
+import org.jbox2d.dynamics.contacts.Contact;
+import org.jbox2d.dynamics.contacts.ContactEdge;
 import org.joml.Matrix4f;
 
 import org.jbox2d.dynamics.*;
@@ -81,18 +86,18 @@ public class Game {
 
     private void createBallsOnTheLeftSide() {
 
-        CreateBall(new Vec2(-1.0f, 6.5f), null, 1);
-        CreateBall(new Vec2(-3.0f, 6.6f), null, 2);
-        CreateBall(new Vec2(-5.0f, 6.6f), null, 3);
-        CreateBall(new Vec2(-7.0f, 6.6f), null, 4);
-        CreateBall(new Vec2(-9.0f, 6.6f), null, 5);
+        CreateBall(new Vec2(-1.0f, 10.0f), null, 1);
+        CreateBall(new Vec2(-3.0f, 10.0f), null, 2);
+        CreateBall(new Vec2(-5.0f, 10.0f), null, 3);
+        CreateBall(new Vec2(-7.0f, 10.0f), null, 4);
+        CreateBall(new Vec2(-9.0f, 10.0f), null, 5);
 
 
-        CreateBall(new Vec2(-1.0f, 9.5f), null, 6);
-        CreateBall(new Vec2(-3.0f, 9.5f), null, 7);
-        CreateBall(new Vec2(-5.0f, 9.5f), null, 8);
-        CreateBall(new Vec2(-7.0f, 9.5f), null, 9);
-        CreateBall(new Vec2(-9.0f, 9.5f), null, 10);
+        CreateBall(new Vec2(-1.0f, 11.5f), null, 6);
+        CreateBall(new Vec2(-3.0f, 11.5f), null, 7);
+        CreateBall(new Vec2(-5.0f, 11.5f), null, 8);
+        CreateBall(new Vec2(-7.0f, 11.5f), null, 9);
+        CreateBall(new Vec2(-9.0f, 11.5f), null, 10);
 
 
 //        for (int i = 0; i < 2; i++) {
@@ -101,17 +106,17 @@ public class Game {
     }
 
     private void createBallsOnTheRightSide() {
-        CreateBall(new Vec2(14.0f, 6.5f), null, 11);
-        CreateBall(new Vec2(16.0f, 6.5f), null, 12);
-        CreateBall(new Vec2(18.0f, 6.5f), null, 13);
-        CreateBall(new Vec2(20.0f, 6.5f), null, 14);
-        CreateBall(new Vec2(22.0f, 6.5f), null, 15);
+        CreateBall(new Vec2(14.0f, 10.0f), null, 11);
+        CreateBall(new Vec2(16.0f, 10.0f), null, 12);
+        CreateBall(new Vec2(18.0f, 10.0f), null, 13);
+        CreateBall(new Vec2(20.0f, 10.0f), null, 14);
+        CreateBall(new Vec2(22.0f, 10.0f), null, 15);
 
-        CreateBall(new Vec2(14.0f, 9.0f), null, 16);
-        CreateBall(new Vec2(16.0f, 9.0f), null, 17);
-        CreateBall(new Vec2(18.0f, 9.0f), null, 18);
-        CreateBall(new Vec2(20.0f, 9.0f), null, 19);
-        CreateBall(new Vec2(22.0f, 9.0f), null, 20);
+        CreateBall(new Vec2(14.0f, 11.5f), null, 16);
+        CreateBall(new Vec2(16.0f, 11.5f), null, 17);
+        CreateBall(new Vec2(18.0f, 11.5f), null, 18);
+        CreateBall(new Vec2(20.0f, 11.5f), null, 19);
+        CreateBall(new Vec2(22.0f, 11.5f), null, 20);
 
 
     }
@@ -182,6 +187,9 @@ public class Game {
         //Vec2 v=new Vec2(0.002f,0.001f);
         BodyDef bodyDef = new BodyDef();
         bodyDef.position = position;
+        bodyDef.gravityScale=0.0f;
+
+
         //bodyDef.angle = 0.0f;
         //bodyDef.linearVelocity = v;
         // bodyDef.angularVelocity = 0.0f;
@@ -196,7 +204,7 @@ public class Game {
 //        }
 
 
-        // bodyDef.linearDamping = 0.0f;
+         bodyDef.linearDamping = 2.0f;
         //bodyDef.angularDamping = 0.0f;
         bodyDef.userData = (Object) ObjectType.Ball;
         bodyDef.type = BodyType.DYNAMIC;
@@ -207,7 +215,7 @@ public class Game {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.userData = null;
-        fixtureDef.friction = 1.0f;
+        fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0f;
         fixtureDef.density = 1.0f;
 
@@ -404,33 +412,31 @@ public class Game {
             // if (finalDistance <= planetRadius * 3) {
             planetDistance.negateLocal();
             float vecSum = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
-            planetDistance.mulLocal(0.5f);
+            planetDistance.mulLocal(1.8f);
             if(entry.getKey()==6) {
-                Log.d("RAHUL1", ""+finalDistance);
-                if (finalDistance<5.5 && finalDistance>1.0) {
-                    Vec2 impluse = new Vec2(0, 0.1f);
-                    entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
+                if (finalDistance<5.0 && finalDistance>1.0) {
+                    Log.d("RAHUL1","YES");
+                    //Vec2 impluse = new Vec2(0, 0.3f);
+                    Vec2 impulse=new Vec2(0,(float) (1.0/(finalDistance*2.0)));
+                    entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
             if(entry.getKey()==16) {
-                Log.d("RAHUL", ""+finalDistance);
-                if (finalDistance<4.5 && finalDistance>1.3) {
-                    Vec2 impluse = new Vec2(0, 0.1f);
+                if (finalDistance<3.5 && finalDistance>2.0) {
+                    Vec2 impluse = new Vec2(0, 0.4f);
                     entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
                 }
             }
 
             if(entry.getKey()==1) {
-                Log.d("RAHUL", ""+finalDistance);
-                if (finalDistance<5.5 && finalDistance>1.0) {
-                    Vec2 impluse = new Vec2(0, -0.1f);
+                if (finalDistance<4.5 && finalDistance>4.0) {
+                    Vec2 impluse = new Vec2(0, -0.3f);
                     entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
                 }
             }
             if(entry.getKey()==11) {
-                Log.d("RAHUL", ""+finalDistance);
-                if (finalDistance<4.5 && finalDistance>1.3) {
-                    Vec2 impluse = new Vec2(0, -0.1f);
+                if (finalDistance<3.5 && finalDistance>3.0) {
+                    Vec2 impluse = new Vec2(0, -0.4f);
                     entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
                 }
             }
