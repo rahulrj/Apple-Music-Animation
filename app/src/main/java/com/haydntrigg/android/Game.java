@@ -19,7 +19,9 @@ import org.joml.Vector4d;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by HAYDN on 1/7/2015.
@@ -54,7 +56,7 @@ public class Game {
 
     ObjectType SpawnType = ObjectType.Box;
 
-    List<Body> mCirclesList = new ArrayList<>();
+    Map<Integer, Body> mCirclesMap = new HashMap<>();
     Body mPlanet = null;
 
     Game(MainActivity parent) {
@@ -79,27 +81,18 @@ public class Game {
 
     private void createBallsOnTheLeftSide() {
 
-        CreateBall(new Vec2(-1.0f, 6.5f), null);
-        CreateBall(new Vec2(-3.0f, 6.6f), null);
-        CreateBall(new Vec2(-5.0f, 6.6f), null);
-        CreateBall(new Vec2(-7.0f, 6.6f), null);
-        CreateBall(new Vec2(-9.0f, 6.6f), null);
+        CreateBall(new Vec2(-1.0f, 6.5f), null, 1);
+        CreateBall(new Vec2(-3.0f, 6.6f), null, 2);
+        CreateBall(new Vec2(-5.0f, 6.6f), null, 3);
+        CreateBall(new Vec2(-7.0f, 6.6f), null, 4);
+        CreateBall(new Vec2(-9.0f, 6.6f), null, 5);
 
-//
-        CreateBall(new Vec2(-1.0f, 9.5f), null);
-        CreateBall(new Vec2(-3.0f, 9.5f), null);
-        CreateBall(new Vec2(-5.0f, 9.5f), null);
-        CreateBall(new Vec2(-7.0f, 9.5f), null);
-        CreateBall(new Vec2(-9.0f, 9.5f), null);
-//
-//        CreateBall(new Vec2(-0.5f, 11.5f), null);
-//        CreateBall(new Vec2(-3.4f, 11.6f), null);
-////
-//        CreateBall(new Vec2(-4.1f, 10.5f), null);
-//        CreateBall(new Vec2(-6.1f, 10.5f), null);
-//
-//        CreateBall(new Vec2(-6.1f, 11.6f), null);
-//        CreateBall(new Vec2(-6.1f, 9.0f), null);
+
+        CreateBall(new Vec2(-1.0f, 9.5f), null, 6);
+        CreateBall(new Vec2(-3.0f, 9.5f), null, 7);
+        CreateBall(new Vec2(-5.0f, 9.5f), null, 8);
+        CreateBall(new Vec2(-7.0f, 9.5f), null, 9);
+        CreateBall(new Vec2(-9.0f, 9.5f), null, 10);
 
 
 //        for (int i = 0; i < 2; i++) {
@@ -108,26 +101,18 @@ public class Game {
     }
 
     private void createBallsOnTheRightSide() {
-        CreateBall(new Vec2(14.0f, 6.5f), null);
-        CreateBall(new Vec2(16.0f, 6.5f), null);
-        CreateBall(new Vec2(18.0f, 6.5f), null);
-        CreateBall(new Vec2(20.0f, 6.5f), null);
-        CreateBall(new Vec2(22.0f, 6.5f), null);
+        CreateBall(new Vec2(14.0f, 6.5f), null, 11);
+        CreateBall(new Vec2(16.0f, 6.5f), null, 12);
+        CreateBall(new Vec2(18.0f, 6.5f), null, 13);
+        CreateBall(new Vec2(20.0f, 6.5f), null, 14);
+        CreateBall(new Vec2(22.0f, 6.5f), null, 15);
 
-        CreateBall(new Vec2(14.0f, 9.0f), null);
-        CreateBall(new Vec2(16.0f, 9.0f), null);
-        CreateBall(new Vec2(18.0f, 9.0f), null);
-        CreateBall(new Vec2(20.0f, 9.0f), null);
-        CreateBall(new Vec2(22.0f, 9.0f), null);
+        CreateBall(new Vec2(14.0f, 9.0f), null, 16);
+        CreateBall(new Vec2(16.0f, 9.0f), null, 17);
+        CreateBall(new Vec2(18.0f, 9.0f), null, 18);
+        CreateBall(new Vec2(20.0f, 9.0f), null, 19);
+        CreateBall(new Vec2(22.0f, 9.0f), null, 20);
 
-//        CreateBall(new Vec2(14.1f, 11.5f), null);
-//        CreateBall(new Vec2(16.8f, 11.6f), null);
-//
-//        CreateBall(new Vec2(19.1f, 11.5f), null);
-//        CreateBall(new Vec2(19.1f, 6.2f), null);
-//
-//        CreateBall(new Vec2(19.1f, 9.55f), null);
-//        CreateBall(new Vec2(19.1f, 9.2f), null);
 
     }
 
@@ -191,7 +176,7 @@ public class Game {
 //    }
 
 
-    private void CreateBall(Vec2 position, @Nullable Vec2 velocity) {
+    private void CreateBall(Vec2 position, @Nullable Vec2 velocity, int id) {
         Vec2 v = velocity == null ? new Vec2() : velocity;
 
         //Vec2 v=new Vec2(0.002f,0.001f);
@@ -230,7 +215,7 @@ public class Game {
 
         Body body = b2World.createBody(bodyDef);
         body.createFixture(fixtureDef);
-        mCirclesList.add(body);
+        mCirclesMap.put(id, body);
     }
 
     private void createPlanet(Vec2 position, @Nullable Vec2 velocity) {
@@ -397,8 +382,8 @@ public class Game {
         }
 
         b2World.clearForces();
-        for (int i = 0; i < mCirclesList.size(); i++) {
-            Vec2 debrisPosition = mCirclesList.get(i).getWorldCenter();
+        for (Map.Entry<Integer, Body> entry : mCirclesMap.entrySet()) {
+            Vec2 debrisPosition = entry.getValue().getWorldCenter();
             //CircleShape planetShape = (CircleShape) mPlanet.getFixtureList().getShape();
             //float planetRadius = planetShape.getRadius();
 
@@ -408,14 +393,50 @@ public class Game {
             planetDistance.addLocal(debrisPosition);
             planetDistance.subLocal(planetPosition);
             float finalDistance = planetDistance.length();
-            //Log.d("RAHUL",""+finalDistance+" "+(planetRadius*3));
+            //Log.d("RAHUL", "" + finalDistance);
 
+//            if(finalDistance<5){
+//                if(entry.getKey()==6){
+//                    Log.d("RAHUL","YES");
+//                    entry.getValue().applyLinearImpulse(new Vec2(0,1),entry.getValue().getWorldCenter());
+//                }
+//            }
             // if (finalDistance <= planetRadius * 3) {
             planetDistance.negateLocal();
             float vecSum = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
             planetDistance.mulLocal(0.5f);
-            Log.d("RAHUL", planetDistance.toString());
-            mCirclesList.get(i).applyForce(planetDistance, mCirclesList.get(i).getWorldCenter());
+            if(entry.getKey()==6) {
+                Log.d("RAHUL1", ""+finalDistance);
+                if (finalDistance<5.5 && finalDistance>1.0) {
+                    Vec2 impluse = new Vec2(0, 0.1f);
+                    entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
+                }
+            }
+            if(entry.getKey()==16) {
+                Log.d("RAHUL", ""+finalDistance);
+                if (finalDistance<4.5 && finalDistance>1.3) {
+                    Vec2 impluse = new Vec2(0, 0.1f);
+                    entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
+                }
+            }
+
+            if(entry.getKey()==1) {
+                Log.d("RAHUL", ""+finalDistance);
+                if (finalDistance<5.5 && finalDistance>1.0) {
+                    Vec2 impluse = new Vec2(0, -0.1f);
+                    entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
+                }
+            }
+            if(entry.getKey()==11) {
+                Log.d("RAHUL", ""+finalDistance);
+                if (finalDistance<4.5 && finalDistance>1.3) {
+                    Vec2 impluse = new Vec2(0, -0.1f);
+                    entry.getValue().applyLinearImpulse(impluse, entry.getValue().getWorldCenter());
+                }
+            }
+
+
+            entry.getValue().applyForce(planetDistance, entry.getValue().getWorldCenter());
         }
 
 
@@ -531,7 +552,7 @@ public class Game {
                     //CreateBox(new Vec2(13.0f * e.getX() / Width, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)));
                     break;
                 case Ball:
-                    CreateBall(new Vec2(13.0f * e.getX() / Width, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)), null);
+                    CreateBall(new Vec2(13.0f * e.getX() / Width, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)), null,0);
                     break;
             }
         }
