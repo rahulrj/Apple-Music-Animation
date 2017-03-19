@@ -2,6 +2,7 @@ package com.haydntrigg.android;
 
 import android.opengl.GLES20;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.haydntrigg.game.supersovietsheep.R;
 
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
+import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.jbox2d.dynamics.contacts.ContactEdge;
@@ -77,6 +79,33 @@ public class Game {
         textView = (TextView) Parent.findViewById(R.id.frame_rate);
 
         b2World = new World(new Vec2(0.0f, 0f));
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        parent.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+        Vec2 lowerLeftCorner = new Vec2(0, 0);
+        Vec2 lowerRightCorner = new Vec2(width, 0);
+        Vec2 upperLeftCorner = new Vec2(0, height);
+        Vec2 upperRightCorner = new Vec2(width, height);
+
+        // static container body, with the collisions at screen borders
+        BodyDef screenBorderDef = new BodyDef();
+        screenBorderDef.position = new Vec2(0, 0);
+        Body screenBorderBody = b2World.createBody(screenBorderDef);
+        EdgeShape screenBorderShape = new EdgeShape();
+
+        // Create fixtures for the four borders (the border shape is re-used)
+        screenBorderShape.set(lowerLeftCorner, lowerRightCorner);
+        screenBorderBody.createFixture(screenBorderShape, 0);
+
+        screenBorderShape.set(lowerRightCorner, upperRightCorner);
+        screenBorderBody.createFixture(screenBorderShape, 0);
+        screenBorderShape.set(upperRightCorner, upperLeftCorner);
+        screenBorderBody.createFixture(screenBorderShape, 0);
+        screenBorderShape.set(upperLeftCorner, lowerLeftCorner);
+        screenBorderBody.createFixture(screenBorderShape, 0);
+
+
     }
 
     private void Reset() {
@@ -416,7 +445,7 @@ public class Game {
 
             double distanceFromCenter = distanceBetweenPoints(planetPosition, entry.getValue().getPosition());
             float linearDamping = (float) (distanceFromCenter > 5 ? 2 : 2 + (5 - distanceFromCenter));
-            Log.d("RAHUL",""+distanceFromCenter);
+            Log.d("RAHUL", "" + distanceFromCenter);
             entry.getValue().setLinearDamping(linearDamping);
 
             if (entry.getKey() == 6) {
