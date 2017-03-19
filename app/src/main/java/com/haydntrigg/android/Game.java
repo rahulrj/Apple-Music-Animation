@@ -309,7 +309,7 @@ public class Game {
         boxTexture = new Texture(Parent.getApplicationContext(), R.drawable.box);
         boxSprite = new Sprite(boxTexture);
 
-        ballTexture = new Texture(Parent.getApplicationContext(), R.drawable.ball);
+        ballTexture = new Texture(Parent.getApplicationContext(), R.drawable.ball1);
         ballSprite = new Sprite(ballTexture);
 
         trailTexture = new Texture(Parent.getApplicationContext(), R.drawable.trail);
@@ -412,7 +412,7 @@ public class Game {
             // if (finalDistance <= planetRadius * 3) {
             planetDistance.negateLocal();
             float vecSum = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
-            planetDistance.mulLocal(1.5f);
+            planetDistance.mulLocal(2.0f);
             if(entry.getKey()==6) {
                 if (finalDistance<4.0 && finalDistance>3.0) {
                     Log.d("RAHUL1","YES");
