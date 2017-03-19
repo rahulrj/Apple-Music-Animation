@@ -28,6 +28,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
+import static android.view.MotionEvent.ACTION_UP;
+
 /**
  * Created by HAYDN on 1/7/2015.
  */
@@ -63,6 +67,10 @@ public class Game {
 
     Map<Integer, Body> mCirclesMap = new HashMap<>();
     Body mPlanet = null;
+    private double mLastTouchX;
+    private double mLastTouchY;
+    private int mPushStrength = 1000;
+
 
     Game(MainActivity parent) {
         Parent = parent;
@@ -187,7 +195,7 @@ public class Game {
         //Vec2 v=new Vec2(0.002f,0.001f);
         BodyDef bodyDef = new BodyDef();
         bodyDef.position = position;
-        bodyDef.gravityScale=0.0f;
+        bodyDef.gravityScale = 0.0f;
 
 
         //bodyDef.angle = 0.0f;
@@ -204,7 +212,7 @@ public class Game {
 //        }
 
 
-         bodyDef.linearDamping = 2.0f;
+        bodyDef.linearDamping = 2.0f;
         //bodyDef.angularDamping = 0.0f;
         bodyDef.userData = (Object) ObjectType.Ball;
         bodyDef.type = BodyType.DYNAMIC;
@@ -391,6 +399,7 @@ public class Game {
 
         b2World.clearForces();
         for (Map.Entry<Integer, Body> entry : mCirclesMap.entrySet()) {
+
             Vec2 debrisPosition = entry.getValue().getWorldCenter();
             //CircleShape planetShape = (CircleShape) mPlanet.getFixtureList().getShape();
             //float planetRadius = planetShape.getRadius();
@@ -401,42 +410,39 @@ public class Game {
             planetDistance.addLocal(debrisPosition);
             planetDistance.subLocal(planetPosition);
             float finalDistance = planetDistance.length();
-            //Log.d("RAHUL", "" + finalDistance);
-
-//            if(finalDistance<5){
-//                if(entry.getKey()==6){
-//                    Log.d("RAHUL","YES");
-//                    entry.getValue().applyLinearImpulse(new Vec2(0,1),entry.getValue().getWorldCenter());
-//                }
-//            }
-            // if (finalDistance <= planetRadius * 3) {
             planetDistance.negateLocal();
             float vecSum = Math.abs(planetDistance.x) + Math.abs(planetDistance.y);
             planetDistance.mulLocal(2.0f);
-            if(entry.getKey()==6) {
-                if (finalDistance<4.0 && finalDistance>3.0) {
-                    Log.d("RAHUL1","YES");
+
+            double distanceFromCenter = distanceBetweenPoints(planetPosition, entry.getValue().getPosition());
+            float linearDamping = (float) (distanceFromCenter > 5 ? 2 : 2 + (5 - distanceFromCenter));
+            Log.d("RAHUL",""+distanceFromCenter);
+            entry.getValue().setLinearDamping(linearDamping);
+
+            if (entry.getKey() == 6) {
+                if (finalDistance < 4.0 && finalDistance > 3.0) {
+                    //Log.d("RAHUL1", "YES");
                     //Vec2 impluse = new Vec2(0, 0.3f);
-                    Vec2 impulse=new Vec2(0,(float) (1.0/(finalDistance*2.2)));
+                    Vec2 impulse = new Vec2(0, (float) (1.0 / (finalDistance * 2.2)));
                     entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
-            if(entry.getKey()==16) {
-                if (finalDistance<3.5 && finalDistance>2.5) {
-                    Vec2 impulse=new Vec2(0,(float) (1.0/(finalDistance*2.2)));
+            if (entry.getKey() == 16) {
+                if (finalDistance < 3.5 && finalDistance > 2.5) {
+                    Vec2 impulse = new Vec2(0, (float) (1.0 / (finalDistance * 2.2)));
                     entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
 
-            if(entry.getKey()==1) {
-                if (finalDistance<4.0 && finalDistance>3.0) {
-                    Vec2 impulse=new Vec2(0,(float) (-1.0/(finalDistance*2.0)));
+            if (entry.getKey() == 1) {
+                if (finalDistance < 4.0 && finalDistance > 3.0) {
+                    Vec2 impulse = new Vec2(0, (float) (-1.0 / (finalDistance * 2.0)));
                     entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
-            if(entry.getKey()==11) {
-                if (finalDistance<3.5 && finalDistance>2.5) {
-                    Vec2 impulse=new Vec2(0,(float) (-1.0/(finalDistance*2.8)));
+            if (entry.getKey() == 11) {
+                if (finalDistance < 3.5 && finalDistance > 2.5) {
+                    Vec2 impulse = new Vec2(0, (float) (-1.0 / (finalDistance * 2.8)));
                     entry.getValue().applyLinearImpulse(impulse, entry.getValue().getWorldCenter());
                 }
             }
@@ -450,6 +456,11 @@ public class Game {
 //            Vec2 position = b.getPosition();
 //            if (position.y < -5 || position.x < -5 || position.x > 18) b2World.destroyBody(b);
 //        }
+    }
+
+
+    private double distanceBetweenPoints(Vec2 point1, Vec2 point2) {
+        return Math.hypot(point2.x - point1.x, point2.y - point1.y);
     }
 
     public void Draw() {
@@ -539,28 +550,35 @@ public class Game {
         else TimeButton.setText("Fast");
     }
 
-    public void TouchEvent(MotionEvent e) {
-        int num_bodies = b2World.getBodyCount();
-        if (num_bodies > 50) {
-            List<Body> bodies = new ArrayList<Body>();
-            for (Body b = b2World.getBodyList(); b != null; b = b.getNext()) bodies.add(b);
-            for (int i = bodies.size() - 1; i >= 0; i--) {
-                Body b = bodies.get(i);
-                if ((ObjectType) b.getUserData() != ObjectType.Floor) {
-                    b2World.destroyBody(b);
-                    break;
+
+    public void TouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case ACTION_DOWN:
+                mLastTouchX = event.getX();
+                mLastTouchY = event.getY();
+                break;
+            case ACTION_MOVE:
+                double x = event.getX();
+                double y = event.getY();
+                double dx = x - mLastTouchX;
+                double dy = y - mLastTouchY;
+                double b = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+                dx = (b == 0) ? 0 : (dx / b);
+                dy = (b == 0) ? 0 : (dy / b);
+                if (dx == 0 && dy == 0) {
+                    return;
                 }
-            }
-        }
-        if (e.getAction() == MotionEvent.ACTION_DOWN) {
-            switch (SpawnType) {
-                case Box:
-                    //CreateBox(new Vec2(13.0f * e.getX() / Width, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)));
-                    break;
-                case Ball:
-                    CreateBall(new Vec2(13.0f * e.getX() / Width, 13.0f * ((float) Height / (float) Width) * (1.0f - e.getY() / Height)), null,0);
-                    break;
-            }
+                for (Map.Entry<Integer, Body> entry : mCirclesMap.entrySet()) {
+                    Vec2 direction = new Vec2((float) (mPushStrength * dx), (float) (-mPushStrength * dy));
+                    entry.getValue().applyForce(direction, entry.getValue().getWorldCenter());
+                    //Log.d("RAHUL", direction.toString());
+                }
+
+
+                break;
+            case ACTION_UP:
+                break;
+
         }
     }
 

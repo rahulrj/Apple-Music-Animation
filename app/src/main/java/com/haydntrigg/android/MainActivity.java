@@ -74,6 +74,7 @@ public class MainActivity extends Activity implements Renderer {
 
 
 
+
         game = new Game(this);
 
     }
