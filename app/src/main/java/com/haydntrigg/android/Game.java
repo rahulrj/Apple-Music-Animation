@@ -72,6 +72,7 @@ public class Game {
     private double mLastTouchX;
     private double mLastTouchY;
     private int mPushStrength = 1000;
+    private static final double PTM_CONSTANT = 0.000264583;
 
 
     Game(MainActivity parent) {
@@ -79,38 +80,52 @@ public class Game {
         textView = (TextView) Parent.findViewById(R.id.frame_rate);
 
         b2World = new World(new Vec2(0.0f, 0f));
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        parent.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-        Vec2 lowerLeftCorner = new Vec2(0, 0);
-        Vec2 lowerRightCorner = new Vec2(width, 0);
-        Vec2 upperLeftCorner = new Vec2(0, height);
-        Vec2 upperRightCorner = new Vec2(width, height);
-
-        // static container body, with the collisions at screen borders
-        BodyDef screenBorderDef = new BodyDef();
-        screenBorderDef.position = new Vec2(0, 0);
-        Body screenBorderBody = b2World.createBody(screenBorderDef);
-        EdgeShape screenBorderShape = new EdgeShape();
-
-        // Create fixtures for the four borders (the border shape is re-used)
-        screenBorderShape.set(lowerLeftCorner, lowerRightCorner);
-        screenBorderBody.createFixture(screenBorderShape, 0);
-
-        screenBorderShape.set(lowerRightCorner, upperRightCorner);
-        screenBorderBody.createFixture(screenBorderShape, 0);
-        screenBorderShape.set(upperRightCorner, upperLeftCorner);
-        screenBorderBody.createFixture(screenBorderShape, 0);
-        screenBorderShape.set(upperLeftCorner, lowerLeftCorner);
-        screenBorderBody.createFixture(screenBorderShape, 0);
-
+//        DisplayMetrics displayMetrics = new DisplayMetrics();
+//        parent.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//        int height = (int) (displayMetrics.heightPixels);
+//        int width = (int) (displayMetrics.widthPixels);
+//        Log.d("RAHUL", "" + width + " " + height);
+//        int width=20;
+//        int height=5;
+//        Vec2 lowerLeftCorner = new Vec2(0, 0);
+//        Vec2 lowerRightCorner = new Vec2(width, 0);
+//        Vec2 upperLeftCorner = new Vec2(0, height);
+//        Vec2 upperRightCorner = new Vec2(width, height);
+//
+//        // static container body, with the collisions at screen borders
+//        BodyDef screenBorderDef = new BodyDef();
+//        screenBorderDef.position = new Vec2(0, 0);
+//        Body screenBorderBody = b2World.createBody(screenBorderDef);
+//
+//        EdgeShape screenBorderShape = new EdgeShape();
+//
+//        // Create fixtures for the four borders (the border shape is re-used)
+//        screenBorderShape.set(lowerLeftCorner, lowerRightCorner);
+//        FixtureDef fixtureDef = new FixtureDef();
+//        fixtureDef.shape=screenBorderShape;
+//
+//
+//        screenBorderBody.createFixture(fixtureDef);
+//
+////        screenBorderShape.set(lowerRightCorner, upperRightCorner);
+////        screenBorderBody.createFixture(screenBorderShape, 0);
+////
+////        screenBorderShape.set(upperRightCorner, upperLeftCorner);
+////        screenBorderBody.createFixture(screenBorderShape, 0);
+////
+////        screenBorderShape.set(upperLeftCorner, lowerLeftCorner);
+////        screenBorderBody.createFixture(screenBorderShape, 0);
 
     }
 
     private void Reset() {
         for (Body b = b2World.getBodyList(); b != null; b = b.getNext()) b2World.destroyBody(b);
-        //CreateFloor(new Vec2(6.5f, 1f));
+        CreateHorizontalWall(new Vec2(-20f, 1f));
+        CreateHorizontalWall(new Vec2(-20f, 20f));
+        CreateVerticalWall(new Vec2(-15f, 0f));
+        CreateVerticalWall(new Vec2(50f, 0f));
+        //CreateVerticalWall(new Vec2(10f, 0f));
+
         // CreateBox(new Vec2(6.5f, 2.55f));
         //CreateBox(new Vec2(6.0f, 1.55f));
         //CreateBox(new Vec2(7.0f, 1.55f));
@@ -122,7 +137,6 @@ public class Game {
     }
 
     private void createBallsOnTheLeftSide() {
-
         CreateBall(new Vec2(-1.0f, 10.0f), null, 1);
         CreateBall(new Vec2(-3.0f, 10.0f), null, 2);
         CreateBall(new Vec2(-5.0f, 10.0f), null, 3);
@@ -296,10 +310,10 @@ public class Game {
         mPlanet = body;
     }
 
-//    private void CreateFloor(Vec2 position) {
-//        BodyDef bodyDef = new BodyDef();
-//
-//        bodyDef.position = position;
+    private void CreateHorizontalWall(Vec2 position) {
+        BodyDef bodyDef = new BodyDef();
+
+        bodyDef.position = position;
 //        bodyDef.angle = 0.0f;
 //        bodyDef.linearVelocity = new Vec2(0.0f, 0.0f);
 //        bodyDef.angularVelocity = 0.0f;
@@ -307,26 +321,59 @@ public class Game {
 //        bodyDef.active = true;
 //        bodyDef.bullet = false;
 //        bodyDef.allowSleep = true;
-//        bodyDef.gravityScale = 1.0f;
-//        bodyDef.linearDamping = 0.0f;
-//        bodyDef.angularDamping = 0.0f;
-//        bodyDef.userData = (Object) ObjectType.Floor;
-//        bodyDef.type = BodyType.KINEMATIC;
-//
-//        PolygonShape shape = new PolygonShape();
-//        shape.setAsBox(5.0f, 0.05f);
-//
-//        FixtureDef fixtureDef = new FixtureDef();
-//        fixtureDef.shape = shape;
-//        fixtureDef.userData = null;
-//        fixtureDef.friction = 0.5f;
-//        fixtureDef.restitution = 0.05f;
-//        fixtureDef.density = 1.0f;
-//        fixtureDef.isSensor = false;
-//
-//        Body body = b2World.createBody(bodyDef);
-//        body.createFixture(fixtureDef);
-//    }
+        //bodyDef.gravityScale = 1.0f;
+        //bodyDef.linearDamping = 0.0f;
+        //bodyDef.angularDamping = 0.0f;
+        bodyDef.userData = (Object) ObjectType.Floor;
+        bodyDef.type = BodyType.KINEMATIC;
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(55.0f, 0.05f);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        //fixtureDef.userData = null;
+        //fixtureDef.friction = 0.5f;
+        //fixtureDef.restitution = 0.05f;
+        //fixtureDef.density = 1.0f;
+        //fixtureDef.isSensor = false;
+
+        Body body = b2World.createBody(bodyDef);
+        body.createFixture(fixtureDef);
+    }
+
+
+    private void CreateVerticalWall(Vec2 position) {
+        BodyDef bodyDef = new BodyDef();
+
+        bodyDef.position = position;
+//        bodyDef.angle = 0.0f;
+//        bodyDef.linearVelocity = new Vec2(0.0f, 0.0f);
+//        bodyDef.angularVelocity = 0.0f;
+//        bodyDef.fixedRotation = false;
+//        bodyDef.active = true;
+//        bodyDef.bullet = false;
+//        bodyDef.allowSleep = true;
+        //bodyDef.gravityScale = 1.0f;
+        //bodyDef.linearDamping = 0.0f;
+        //bodyDef.angularDamping = 0.0f;
+        bodyDef.userData = (Object) ObjectType.Floor;
+        bodyDef.type = BodyType.KINEMATIC;
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(0.05f, 25f);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        //fixtureDef.userData = null;
+        //fixtureDef.friction = 0.5f;
+        //fixtureDef.restitution = 0.05f;
+        //fixtureDef.density = 1.0f;
+        //fixtureDef.isSensor = false;
+
+        Body body = b2World.createBody(bodyDef);
+        body.createFixture(fixtureDef);
+    }
 
     public void Init() {
 
@@ -445,7 +492,7 @@ public class Game {
 
             double distanceFromCenter = distanceBetweenPoints(planetPosition, entry.getValue().getPosition());
             float linearDamping = (float) (distanceFromCenter > 5 ? 2 : 2 + (5 - distanceFromCenter));
-            Log.d("RAHUL", "" + distanceFromCenter);
+            //Log.d("RAHUL", "" + distanceFromCenter);
             entry.getValue().setLinearDamping(linearDamping);
 
             if (entry.getKey() == 6) {
