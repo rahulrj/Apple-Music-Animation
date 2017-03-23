@@ -56,7 +56,6 @@ public class Game {
     World b2World;
     Vector4f DrawWhite = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-    Button ResetButton, SpawnButton, TimeButton;
     Boolean IsSlow = false;
 
     enum ObjectType {
@@ -398,59 +397,19 @@ public class Game {
         groundSprite = new Sprite(groundTexture);
         GLES20.glClearColor(235f / 255.0f, 235f / 255.0f, 255f / 255.0f, 255f / 255.0f);
 
-        ResetButton = (Button) Parent.findViewById(R.id.reset_button);
-        SpawnButton = (Button) Parent.findViewById(R.id.spawntype_button);
-        TimeButton = (Button) Parent.findViewById(R.id.time_button);
-
-        ResetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Parent.semaphore.acquire(1);
-                    Reset();
-                } catch (Exception e) {
-
-                } finally {
-                    Parent.semaphore.release(1);
-                }
-            }
-        });
-
-        SpawnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Parent.semaphore.acquire(1);
-                    switch (SpawnType) {
-                        case Box:
-                            SpawnType = ObjectType.Ball;
-                            break;
-                        default:
-                            SpawnType = ObjectType.Box;
-                            break;
-                    }
-                } catch (Exception e) {
-
-                } finally {
-                    Parent.semaphore.release(1);
-                }
-            }
-        });
-
-        TimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Parent.semaphore.acquire(1);
-                    IsSlow = !IsSlow;
-
-                } catch (Exception e) {
-
-                } finally {
-                    Parent.semaphore.release(1);
-                }
-            }
-        });
+//        ResetButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    Parent.semaphore.acquire(1);
+//                    Reset();
+//                } catch (Exception e) {
+//
+//                } finally {
+//                    Parent.semaphore.release(1);
+//                }
+//            }
+//        });
 
         try {
             Thread.sleep(1000);
@@ -605,20 +564,20 @@ public class Game {
     }
 
     public void UI() {
-        textView.setText("JBox2D Box Example. Written by Haydn Trigg");
-        switch (SpawnType) {
-            case Box:
-                SpawnButton.setText("Box");
-                break;
-            case Ball:
-                SpawnButton.setText("Ball");
-                break;
-            default:
-                SpawnButton.setText("Unknown?");
-                break;
-        }
-        if (IsSlow) TimeButton.setText("Slow");
-        else TimeButton.setText("Fast");
+        textView.setText("");
+//        switch (SpawnType) {
+//            case Box:
+//                SpawnButton.setText("Box");
+//                break;
+//            case Ball:
+//                SpawnButton.setText("Ball");
+//                break;
+//            default:
+//                SpawnButton.setText("Unknown?");
+//                break;
+//        }
+//        if (IsSlow) TimeButton.setText("Slow");
+//        else TimeButton.setText("Fast");
     }
 
 

@@ -145,7 +145,7 @@ public class MainActivity extends Activity implements Renderer {
             }
             //game.Update(total_delta);
             game.Draw();
-            runOnUiThread(uiRunnable);
+            //runOnUiThread(uiRunnable);
         }
         catch (Exception e)
         {
