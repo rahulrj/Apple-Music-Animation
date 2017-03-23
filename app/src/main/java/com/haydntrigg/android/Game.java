@@ -70,7 +70,7 @@ public class Game {
     Body mPlanet = null;
     private double mLastTouchX;
     private double mLastTouchY;
-    private int mPushStrength = 1000;
+    private int mPushStrength = 20000;
     private static final double PTM_CONSTANT = 0.000264583;
 
 
@@ -601,9 +601,10 @@ public class Game {
                 for (Map.Entry<Integer, Body> entry : mCirclesMap.entrySet()) {
                     Vec2 direction = new Vec2((float) (mPushStrength * dx), (float) (-mPushStrength * dy));
                     entry.getValue().applyForce(direction, entry.getValue().getWorldCenter());
-                    //Log.d("RAHUL", direction.toString());
                 }
 
+                mLastTouchX = x;
+                mLastTouchY = y;
 
                 break;
             case ACTION_UP:
