@@ -119,10 +119,10 @@ public class Game {
 
     private void Reset() {
         for (Body b = b2World.getBodyList(); b != null; b = b.getNext()) b2World.destroyBody(b);
-        CreateHorizontalWall(new Vec2(-20f, 1f));
-        CreateHorizontalWall(new Vec2(-20f, 20f));
-        CreateVerticalWall(new Vec2(-15f, 0f));
-        CreateVerticalWall(new Vec2(50f, 0f));
+        CreateHorizontalWall(new Vec2(-50f, 1f));
+        CreateHorizontalWall(new Vec2(-50f, 20f));
+        CreateVerticalWall(new Vec2(-30f, 0f));
+        CreateVerticalWall(new Vec2(75f, 0f));
 
         createBallsOnTheLeftSide();
         createBallsOnTheRightSide();
@@ -131,18 +131,18 @@ public class Game {
     }
 
     private void createBallsOnTheLeftSide() {
-        CreateBall(new Vec2(-1.0f, 10.0f), null, 1);
-        CreateBall(new Vec2(-3.0f, 10.0f), null, 2);
-        CreateBall(new Vec2(-5.0f, 10.0f), null, 3);
-        CreateBall(new Vec2(-7.0f, 10.0f), null, 4);
-        CreateBall(new Vec2(-9.0f, 10.0f), null, 5);
+        CreateBall(new Vec2(-3.0f, 10.0f), null, 1);
+        CreateBall(new Vec2(-5.0f, 10.0f), null, 2);
+        CreateBall(new Vec2(-7.0f, 10.0f), null, 3);
+        CreateBall(new Vec2(-9.0f, 10.0f), null, 4);
+        CreateBall(new Vec2(-11.0f, 10.0f), null, 5);
 
 
-        CreateBall(new Vec2(-1.0f, 11.5f), null, 6);
-        CreateBall(new Vec2(-3.0f, 11.5f), null, 7);
-        CreateBall(new Vec2(-5.0f, 11.5f), null, 8);
-        CreateBall(new Vec2(-7.0f, 11.5f), null, 9);
-        CreateBall(new Vec2(-9.0f, 11.5f), null, 10);
+        CreateBall(new Vec2(-3.0f, 11.5f), null, 6);
+        CreateBall(new Vec2(-5.0f, 11.5f), null, 7);
+        CreateBall(new Vec2(-7.0f, 11.5f), null, 8);
+        CreateBall(new Vec2(-9.0f, 11.5f), null, 9);
+        CreateBall(new Vec2(-11.0f, 11.5f), null, 10);
 
 
 //        for (int i = 0; i < 2; i++) {
@@ -151,17 +151,17 @@ public class Game {
     }
 
     private void createBallsOnTheRightSide() {
-        CreateBall(new Vec2(14.0f, 10.0f), null, 11);
-        CreateBall(new Vec2(16.0f, 10.0f), null, 12);
-        CreateBall(new Vec2(18.0f, 10.0f), null, 13);
-        CreateBall(new Vec2(20.0f, 10.0f), null, 14);
-        CreateBall(new Vec2(22.0f, 10.0f), null, 15);
+        CreateBall(new Vec2(16.0f, 10.0f), null, 11);
+        CreateBall(new Vec2(18.0f, 10.0f), null, 12);
+        CreateBall(new Vec2(20.0f, 10.0f), null, 13);
+        CreateBall(new Vec2(22.0f, 10.0f), null, 14);
+        CreateBall(new Vec2(24.0f, 10.0f), null, 15);
 
-        CreateBall(new Vec2(14.0f, 11.5f), null, 16);
-        CreateBall(new Vec2(16.0f, 11.5f), null, 17);
-        CreateBall(new Vec2(18.0f, 11.5f), null, 18);
-        CreateBall(new Vec2(20.0f, 11.5f), null, 19);
-        CreateBall(new Vec2(22.0f, 11.5f), null, 20);
+        CreateBall(new Vec2(16.0f, 11.5f), null, 16);
+        CreateBall(new Vec2(18.0f, 11.5f), null, 17);
+        CreateBall(new Vec2(20.0f, 11.5f), null, 18);
+        CreateBall(new Vec2(22.0f, 11.5f), null, 19);
+        CreateBall(new Vec2(24.0f, 11.5f), null, 20);
 
 
     }
@@ -322,7 +322,7 @@ public class Game {
         bodyDef.type = BodyType.KINEMATIC;
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(100.0f, 0.05f);
+        shape.setAsBox(125.0f, 0.05f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
