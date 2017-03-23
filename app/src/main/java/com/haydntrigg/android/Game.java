@@ -124,13 +124,8 @@ public class Game {
         CreateHorizontalWall(new Vec2(-20f, 20f));
         CreateVerticalWall(new Vec2(-15f, 0f));
         CreateVerticalWall(new Vec2(50f, 0f));
-        //CreateVerticalWall(new Vec2(10f, 0f));
 
-        // CreateBox(new Vec2(6.5f, 2.55f));
-        //CreateBox(new Vec2(6.0f, 1.55f));
-        //CreateBox(new Vec2(7.0f, 1.55f));
         createBallsOnTheLeftSide();
-        //createPlanet(new Vec2(7.0f, 10.0f), null);
         createBallsOnTheRightSide();
 
         //CreateBall(new Vec2(10.0f, 5.0f), new Vec2(-7.5f, -5.5f));
@@ -328,7 +323,7 @@ public class Game {
         bodyDef.type = BodyType.KINEMATIC;
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(55.0f, 0.05f);
+        shape.setAsBox(100.0f, 0.05f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
