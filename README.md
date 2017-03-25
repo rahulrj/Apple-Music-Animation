@@ -17,7 +17,12 @@ Cocos2d, which also involves the rendering engine in itself.
 some additional APIs. I didn't know how to render the objects on screen in Android when i started with Box2d. The rendering
 engine in the animation is based out on this demo app.
 
+3. [JOML](https://github.com/JOML-CI/JOML) This is the Java OpenGL Mathematics library is used to calculate matrices for OpenGL that OpenGL shaders can use to draw geometry to the screen. Its also bundled in the JBox2d demo.
 
 
 I will be publishing a blog regarding how this animaton is made and what all conecpts of physics goes into this. Please watch
 out my [medium blog](https://medium.com/@rahulraja) and my [personal blog](http://rahulrj.github.io/).
+
+
+## Demo
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ![](https://github.com/rahulrj/AOM/blob/master/ama_demo.mp4)
