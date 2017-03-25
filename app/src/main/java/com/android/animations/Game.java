@@ -21,28 +21,29 @@ import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
 
 
-public class Game {
+class Game {
 
     private MainActivity mParentActivity = null;
     private TextView mResetTextView;
-    private int mWidth;
-    private int mHeight;
     private Matrix4f mView = new Matrix4f();
     private Texture mBallTexture;
     private Sprite mBallSprite;
     private World mB2World;
     private Vector4f mDrawWhite = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+    private float[] mLeftCirclesXCoordinates = {-3.0f, -5.0f, -7.0f, -9.0f, -11.0f};
+    private float[] mCirclesYCoordinates = {10.0f, 11.5f};
 
-    enum ObjectType {
-        Floor,
+
+    private enum ObjectType {
+        Wall,
         Ball
     }
 
 
-    Map<Integer, Body> mCirclesMap = new HashMap<>();
+    private Map<Integer, Body> mCirclesMap = new HashMap<>();
     private double mLastTouchX;
     private double mLastTouchY;
-    private static final int PUSH_STRENGTH = 20000;
+    private static final int PUSH_STRENGTH = 25000;
 
 
     Game(MainActivity parent) {
@@ -63,18 +64,26 @@ public class Game {
     }
 
     private void createBallsOnTheLeftSide() {
-        createBall(new Vec2(-3.0f, 10.0f), null, 1);
-        createBall(new Vec2(-5.0f, 10.0f), null, 2);
-        createBall(new Vec2(-7.0f, 10.0f), null, 3);
-        createBall(new Vec2(-9.0f, 10.0f), null, 4);
-        createBall(new Vec2(-11.0f, 10.0f), null, 5);
+        for (int i = 1; i <= 10; i++) {
+            if (i > 5) {
+                createBall(new Vec2(mLeftCirclesXCoordinates[i - 6], mCirclesYCoordinates[1]), null, i);
+            } else {
+                createBall(new Vec2(mLeftCirclesXCoordinates[i - 1], mCirclesYCoordinates[0]), null, i);
+            }
+        }
 
-
-        createBall(new Vec2(-3.0f, 11.5f), null, 6);
-        createBall(new Vec2(-5.0f, 11.5f), null, 7);
-        createBall(new Vec2(-7.0f, 11.5f), null, 8);
-        createBall(new Vec2(-9.0f, 11.5f), null, 9);
-        createBall(new Vec2(-11.0f, 11.5f), null, 10);
+//        createBall(new Vec2(-3.0f, 10.0f), null, 1);
+//        createBall(new Vec2(-5.0f, 10.0f), null, 2);
+//        createBall(new Vec2(-7.0f, 10.0f), null, 3);
+//        createBall(new Vec2(-9.0f, 10.0f), null, 4);
+//        createBall(new Vec2(-11.0f, 10.0f), null, 5);
+//
+//
+//        createBall(new Vec2(-3.0f, 11.5f), null, 6);
+//        createBall(new Vec2(-5.0f, 11.5f), null, 7);
+//        createBall(new Vec2(-7.0f, 11.5f), null, 8);
+//        createBall(new Vec2(-9.0f, 11.5f), null, 9);
+//        createBall(new Vec2(-11.0f, 11.5f), null, 10);
     }
 
     private void createBallsOnTheRightSide() {
@@ -122,7 +131,7 @@ public class Game {
         BodyDef bodyDef = new BodyDef();
 
         bodyDef.position = position;
-        bodyDef.userData = (Object) ObjectType.Floor;
+        bodyDef.userData = (Object) ObjectType.Wall;
         bodyDef.type = BodyType.KINEMATIC;
 
         PolygonShape shape = new PolygonShape();
@@ -140,7 +149,7 @@ public class Game {
         BodyDef bodyDef = new BodyDef();
 
         bodyDef.position = position;
-        bodyDef.userData = (Object) ObjectType.Floor;
+        bodyDef.userData = (Object) ObjectType.Wall;
         bodyDef.type = BodyType.KINEMATIC;
 
         PolygonShape shape = new PolygonShape();
@@ -169,7 +178,7 @@ public class Game {
         GLES20.glBlendFunc(GLES20.GL_ONE, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 
 
-        mBallTexture = new Texture(mParentActivity.getApplicationContext(), R.drawable.ball1);
+        mBallTexture = new Texture(mParentActivity.getApplicationContext(), R.drawable.ball);
         mBallSprite = new Sprite(mBallTexture);
 
         GLES20.glClearColor(235f / 255.0f, 235f / 255.0f, 255f / 255.0f, 255f / 255.0f);
@@ -197,7 +206,7 @@ public class Game {
         reset();
     }
 
-    public void Update(float delta) {
+    void Update(float delta) {
 
         mB2World.step(delta, 20, 20);
 
@@ -214,6 +223,7 @@ public class Game {
             centertDistance.negateLocal();
 
             centertDistance.mulLocal((float) (1.0 / (finalDistance * 0.030)));
+            //centertDistance.mulLocal((float) (finalDistance*0.3));
 
 
             double distanceFromCenter = distanceBetweenPoints(centerPosition, entry.getValue().getPosition());
@@ -278,12 +288,14 @@ public class Game {
         }
     }
 
-    public void setUpUi() {
-        mResetTextView.setText("reset");
+    void setUpUi() {
+        mResetTextView.setText("Reset");
     }
 
-
-    public void onTouchEvent(MotionEvent event) {
+    /**
+     * Move the circles on touch event
+     */
+    void onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case ACTION_DOWN:
                 mLastTouchX = event.getX();
@@ -315,18 +327,11 @@ public class Game {
         }
     }
 
-    public void SetSize(int width, int height) {
-        mWidth = width;
-        mHeight = height;
-
+    void SetSize(int width, int height) {
         final float height_ratio = ((float) height) / ((float) width);
         final float base_units = 13f;
-        final float pixels_per_unit = 100.0f;
         float virtual_width = base_units;
         float virtual_height = virtual_width * height_ratio;
-
-
         mView = new Matrix4f().ortho(0, virtual_width, 0, virtual_height, 1, -1);
-        //.orthoM(View,0,0,Width,0,Height,1,-1);
     }
 }

@@ -20,11 +20,11 @@ import javax.microedition.khronos.opengles.GL10;
 public class MainActivity extends Activity implements Renderer {
     private Semaphore mSemaphore = new Semaphore(1, true);
     private GLSurfaceView mGlSurfaceView = null;
-    private MainActivity mActivity = this;
     private RelativeLayout mLayoutBody;
     private Game mGame;
     private long mLastTicks = -1;
-    private boolean mInit = false;
+    private float mAccumulator = 0.0f;
+
 
     private final Runnable uiRunnable = new Runnable() {
         @Override
@@ -60,7 +60,6 @@ public class MainActivity extends Activity implements Renderer {
         mGlSurfaceView.setEGLContextClientVersion(2);
         mGlSurfaceView.setRenderer(this);
         mGlSurfaceView.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
-
 
         mGame = new Game(this);
 
@@ -108,22 +107,19 @@ public class MainActivity extends Activity implements Renderer {
         }
     }
 
-    float Accumulator = 0.0f;
-
     public void onDrawFrame(GL10 gl) {
         try {
-            //Log.d("RAHUL","DRAW");
             mSemaphore.acquire(1);
             if (mLastTicks == -1) mLastTicks = Calendar.getInstance().getTime().getTime();
             final float min_timestep = 1.0f / 100.0f;
             // Calculate Delta Ticks
             long nowticks = Calendar.getInstance().getTime().getTime();
-            Accumulator += (float) (nowticks - mLastTicks) / 1000.0f;
+            mAccumulator += (float) (nowticks - mLastTicks) / 1000.0f;
             mLastTicks = nowticks;
             // Update for the total amount of time and any remainder. This ensures smoothest framerate.
-            while (Accumulator > min_timestep) {
+            while (mAccumulator > min_timestep) {
                 mGame.Update(min_timestep);
-                Accumulator -= min_timestep;
+                mAccumulator -= min_timestep;
             }
             //game.Update(total_delta);
             mGame.draw();

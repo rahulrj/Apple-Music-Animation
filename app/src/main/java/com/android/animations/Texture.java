@@ -9,11 +9,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.opengl.GLES20;
-import android.opengl.GLES30;
 import android.opengl.GLUtils;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
 
 
 class Texture {
