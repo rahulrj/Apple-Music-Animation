@@ -30,8 +30,12 @@ class Game {
     private Sprite mBallSprite;
     private World mB2World;
     private Vector4f mDrawWhite = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+
     private float[] mLeftCirclesXCoordinates = {-3.0f, -5.0f, -7.0f, -9.0f, -11.0f};
+    private float[] mRightCirclesXCoordinates = {16.0f, 18.0f, 20.0f, 22.0f, 24.0f};
     private float[] mCirclesYCoordinates = {10.0f, 11.5f};
+    private float mLengthOfHorizontalWall = 125.0f;
+    private float mLengthOfVerticalWall = 25.0f;
 
 
     private enum ObjectType {
@@ -71,35 +75,16 @@ class Game {
                 createBall(new Vec2(mLeftCirclesXCoordinates[i - 1], mCirclesYCoordinates[0]), null, i);
             }
         }
-
-//        createBall(new Vec2(-3.0f, 10.0f), null, 1);
-//        createBall(new Vec2(-5.0f, 10.0f), null, 2);
-//        createBall(new Vec2(-7.0f, 10.0f), null, 3);
-//        createBall(new Vec2(-9.0f, 10.0f), null, 4);
-//        createBall(new Vec2(-11.0f, 10.0f), null, 5);
-//
-//
-//        createBall(new Vec2(-3.0f, 11.5f), null, 6);
-//        createBall(new Vec2(-5.0f, 11.5f), null, 7);
-//        createBall(new Vec2(-7.0f, 11.5f), null, 8);
-//        createBall(new Vec2(-9.0f, 11.5f), null, 9);
-//        createBall(new Vec2(-11.0f, 11.5f), null, 10);
     }
 
     private void createBallsOnTheRightSide() {
-        createBall(new Vec2(16.0f, 10.0f), null, 11);
-        createBall(new Vec2(18.0f, 10.0f), null, 12);
-        createBall(new Vec2(20.0f, 10.0f), null, 13);
-        createBall(new Vec2(22.0f, 10.0f), null, 14);
-        createBall(new Vec2(24.0f, 10.0f), null, 15);
-
-        createBall(new Vec2(16.0f, 11.5f), null, 16);
-        createBall(new Vec2(18.0f, 11.5f), null, 17);
-        createBall(new Vec2(20.0f, 11.5f), null, 18);
-        createBall(new Vec2(22.0f, 11.5f), null, 19);
-        createBall(new Vec2(24.0f, 11.5f), null, 20);
-
-
+        for (int i = 1; i <= 10; i++) {
+            if (i > 5) {
+                createBall(new Vec2(mRightCirclesXCoordinates[i - 6], mCirclesYCoordinates[1]), null, i + 10);
+            } else {
+                createBall(new Vec2(mRightCirclesXCoordinates[i - 1], mCirclesYCoordinates[0]), null, i + 10);
+            }
+        }
     }
 
     private void createBall(Vec2 position, @Nullable Vec2 velocity, int id) {
@@ -135,7 +120,7 @@ class Game {
         bodyDef.type = BodyType.KINEMATIC;
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(125.0f, 0.05f);
+        shape.setAsBox(mLengthOfHorizontalWall, 0.05f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -153,7 +138,7 @@ class Game {
         bodyDef.type = BodyType.KINEMATIC;
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.05f, 25f);
+        shape.setAsBox(0.05f, mLengthOfVerticalWall);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -223,8 +208,6 @@ class Game {
             centertDistance.negateLocal();
 
             centertDistance.mulLocal((float) (1.0 / (finalDistance * 0.030)));
-            //centertDistance.mulLocal((float) (finalDistance*0.3));
-
 
             double distanceFromCenter = distanceBetweenPoints(centerPosition, entry.getValue().getPosition());
             float linearDamping = (float) (distanceFromCenter > 5 ? 2 : 2 + (5 - distanceFromCenter));
