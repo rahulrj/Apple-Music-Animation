@@ -1,4 +1,4 @@
-package com.haydntrigg.android;
+package com.android.animations;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,65 +15,55 @@ import android.opengl.GLUtils;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 
-/**
- * Created by HAYDN on 1/7/2015.
- */
-public class Texture {
 
-    private int TextureID[] = {0};
-    private int Width,Height;
-    public Texture(final Context context, int resource_id)
-    {
-        loadTexture(context,resource_id);
+class Texture {
+
+    private int mTextureID[] = {0};
+    private int mWidth, mHeight;
+
+    Texture(final Context context, int resource_id) {
+        loadTexture(context, resource_id);
     }
 
-    public void Destroy()
-    {
-        GLES20.glDeleteTextures(1,TextureID,0);
+    public void destroy() {
+        GLES20.glDeleteTextures(1, mTextureID, 0);
     }
 
 
-    public int GetTextureID()
-    {
-        return TextureID[0];
+    public int getTextureID() {
+        return mTextureID[0];
     }
 
-    public int GetWidth()
-    {
-        return Width;
+    int getWidth() {
+        return mWidth;
     }
 
-    public int GetHeight()
-    {
-        return Height;
+    int getHeight() {
+        return mHeight;
     }
 
-    public void BindTexture(int id)
-    {
+    void bindTexture(int id) {
         GLES20.glActiveTexture(id);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, TextureID[0]);
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureID[0]);
     }
 
-    private void loadTexture(final Context context, final int resourceId)
-    {
-        GLES20.glGenTextures(1, TextureID, 0);
+    private void loadTexture(final Context context, final int resourceId) {
+        GLES20.glGenTextures(1, mTextureID, 0);
 
-        try
-        {
-            if (TextureID[0] != 0)
-            {
+        try {
+            if (mTextureID[0] != 0) {
                 final BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inScaled = false;   // No pre-scaling
 
                 // Read in the resource
-                 Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
-                bitmap=drawTextToBitmap(context,"Hello",bitmap);
+                Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId, options);
+                bitmap = drawTextToBitmap(context, "Hello", bitmap);
 
-                Width = bitmap.getWidth();
-                Height = bitmap.getHeight();
+                mWidth = bitmap.getWidth();
+                mHeight = bitmap.getHeight();
 
                 // Bind to the texture in OpenGL
-                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, TextureID[0]);
+                GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, mTextureID[0]);
 
                 // Set filtering
                 GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_LINEAR);
@@ -93,25 +83,22 @@ public class Texture {
                 bitmap.recycle();
             }
 
-            if (TextureID[0] == 0)
-            {
+            if (mTextureID[0] == 0) {
                 throw new RuntimeException("Error loading texture.");
             }
-        }
-        catch (Exception e)
-        {
-            GLES20.glDeleteTextures(1,TextureID,0);
-            TextureID[0] = 0;
+        } catch (Exception e) {
+            GLES20.glDeleteTextures(1, mTextureID, 0);
+            mTextureID[0] = 0;
             throw e;
         }
     }
 
-    public Bitmap drawTextToBitmap(Context context, String text,Bitmap bitmap) {
+    private Bitmap drawTextToBitmap(Context context, String text, Bitmap bitmap) {
         Resources resources = context.getResources();
         float scale = resources.getDisplayMetrics().density;
         Bitmap.Config bitmapConfig = bitmap.getConfig();
         // set default bitmap config if none
-        if(bitmapConfig == null) {
+        if (bitmapConfig == null) {
             bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
         }
         // resource bitmaps are imutable,
@@ -131,8 +118,8 @@ public class Texture {
         // draw text to the Canvas center
         Rect bounds = new Rect();
         paint.getTextBounds(text, 0, text.length(), bounds);
-        int x = (bitmap.getWidth() - bounds.width())/2;
-        int y = (bitmap.getHeight() + bounds.height())/2;
+        int x = (bitmap.getWidth() - bounds.width()) / 2;
+        int y = (bitmap.getHeight() + bounds.height()) / 2;
 
         canvas.drawText(text, x, y, paint);
 

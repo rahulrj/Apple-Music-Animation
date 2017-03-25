@@ -1,4 +1,4 @@
-package com.haydntrigg.android;
+package com.android.animations;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

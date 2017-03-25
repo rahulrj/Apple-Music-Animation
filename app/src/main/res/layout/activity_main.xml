@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:id="@+id/layout_body">
+        android:layout_height="match_parent"
+        android:id="@+id/layout_body">
 
         <android.opengl.GLSurfaceView
             android:layout_width="match_parent"
