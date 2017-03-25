@@ -27,3 +27,9 @@ out my [medium blog](https://medium.com/@rahulraja) and my [personal blog](http:
 ## Demo
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.youtube.com/watch?v=lzkK9rtabZw"><img src="http://img.youtube.com/vi/lzkK9rtabZw/hqdefault.jpg" 
  width="480" height="360" border="10" /></a>
+
+
+## Next Release
+1. Click to enlarge the circles
+2. Rest Animation
+3. Swirl animation of the circles.
