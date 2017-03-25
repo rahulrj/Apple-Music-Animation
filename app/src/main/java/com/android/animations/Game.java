@@ -31,11 +31,11 @@ class Game {
     private World mB2World;
     private Vector4f mDrawWhite = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-    private float[] mLeftCirclesXCoordinates = {-3.0f, -5.0f, -7.0f, -9.0f, -11.0f};
-    private float[] mRightCirclesXCoordinates = {16.0f, 18.0f, 20.0f, 22.0f, 24.0f};
-    private float[] mCirclesYCoordinates = {10.0f, 11.5f};
-    private float mLengthOfHorizontalWall = 125.0f;
-    private float mLengthOfVerticalWall = 25.0f;
+    private float[] LEFT_CIRCLES_X = {-3.0f, -5.0f, -7.0f, -9.0f, -11.0f};
+    private float[] RIGHT_CIRCLES_X = {16.0f, 18.0f, 20.0f, 22.0f, 24.0f};
+    private final float[] CIRCLES_Y_COORDINATES = {10.0f, 11.5f};
+    private final float HORIZONTAL_WALL_LENGTH = 125.0f;
+    private final float VERTICAL_WALL_LENGTH = 25.0f;
 
 
     private enum ObjectType {
@@ -70,9 +70,9 @@ class Game {
     private void createBallsOnTheLeftSide() {
         for (int i = 1; i <= 10; i++) {
             if (i > 5) {
-                createBall(new Vec2(mLeftCirclesXCoordinates[i - 6], mCirclesYCoordinates[1]), null, i);
+                createBall(new Vec2(LEFT_CIRCLES_X[i - 6], CIRCLES_Y_COORDINATES[1]), null, i);
             } else {
-                createBall(new Vec2(mLeftCirclesXCoordinates[i - 1], mCirclesYCoordinates[0]), null, i);
+                createBall(new Vec2(LEFT_CIRCLES_X[i - 1], CIRCLES_Y_COORDINATES[0]), null, i);
             }
         }
     }
@@ -80,9 +80,9 @@ class Game {
     private void createBallsOnTheRightSide() {
         for (int i = 1; i <= 10; i++) {
             if (i > 5) {
-                createBall(new Vec2(mRightCirclesXCoordinates[i - 6], mCirclesYCoordinates[1]), null, i + 10);
+                createBall(new Vec2(RIGHT_CIRCLES_X[i - 6], CIRCLES_Y_COORDINATES[1]), null, i + 10);
             } else {
-                createBall(new Vec2(mRightCirclesXCoordinates[i - 1], mCirclesYCoordinates[0]), null, i + 10);
+                createBall(new Vec2(RIGHT_CIRCLES_X[i - 1], CIRCLES_Y_COORDINATES[0]), null, i + 10);
             }
         }
     }
@@ -120,7 +120,7 @@ class Game {
         bodyDef.type = BodyType.KINEMATIC;
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(mLengthOfHorizontalWall, 0.05f);
+        shape.setAsBox(HORIZONTAL_WALL_LENGTH, 0.05f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -138,7 +138,7 @@ class Game {
         bodyDef.type = BodyType.KINEMATIC;
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.05f, mLengthOfVerticalWall);
+        shape.setAsBox(0.05f, VERTICAL_WALL_LENGTH);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
