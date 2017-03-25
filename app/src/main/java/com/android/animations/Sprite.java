@@ -17,7 +17,6 @@ public class Sprite {
         Matrix4f mscale = new Matrix4f().scale((float) mDrawTexture.getWidth() * scale, (float) mDrawTexture.getHeight() * scale, 1.0f);
         Matrix4f mrotate = new Matrix4f().rotate(rotation * (float) (180.0 / Math.PI), 0.0f, 0.0f, -1.0f);
 
-
         Matrix4f mvp = new Matrix4f().mul(view).mul(mtranslate).mul(mrotate).mul(mscale);
         Square.sDrawSquare.draw(mvp);
     }
