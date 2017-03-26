@@ -38,6 +38,6 @@ a GIF with a high frame rate.
 
 ## Next Release
 1. Click to enlarge the circles
-2. Rest Animation
-3. Swirl animation of the circles.
+2. Reset Animation
+3. Swirl animation of the circles while they move.
 4. And of course a blog regarding this.
