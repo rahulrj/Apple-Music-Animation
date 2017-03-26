@@ -40,3 +40,4 @@ a GIF with a high frame rate.
 1. Click to enlarge the circles
 2. Rest Animation
 3. Swirl animation of the circles.
+4. And of course a blog regarding this.
