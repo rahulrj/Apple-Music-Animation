@@ -25,4 +25,19 @@ out my [medium blog](https://medium.com/@rahulraja) and my [personal blog](http:
 
 
 ## Demo
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ![](https://github.com/rahulrj/AOM/blob/master/ama_demo.mp4)
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.youtube.com/watch?v=lzkK9rtabZw"><img src="http://img.youtube.com/vi/lzkK9rtabZw/maxresdefault.jpg" border="10" /></a>
+
+
+## GIF demo
+The above video link is a high resolution demo for the animation. In case you dont want to redirect to that demo, here is a
+GIF demo that will play in here, but it has a low frame rate. I didn't find any tool to convert a high quality video into
+a GIF with a high frame rate.
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ![](animation_demo.gif)
+
+
+## Next Release
+1. Click to enlarge the circles
+2. Reset Animation
+3. Swirl animation of the circles while they move.
+4. And of course a blog regarding this.
