@@ -5,6 +5,9 @@ This demo emulates the animation of the circles which are present in Apple Music
 app doesn't come with such animations. So i tried my hands and made it for Android. The initial version of the animation
 covers the most important functionalities of that.
 
+## Demo
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.youtube.com/watch?v=lzkK9rtabZw"><img src="http://img.youtube.com/vi/lzkK9rtabZw/maxresdefault.jpg" border="10" /></a>
+
 ## GIF demo
 The above video link is a high resolution demo for the animation. In case you dont want to redirect to that demo, here is a
 GIF demo that will play in here, but it has a low frame rate. I didn't find any tool to convert a high quality video into
@@ -29,11 +32,6 @@ engine in the animation is based out on this demo app.
 
 I will be publishing a blog regarding how this animaton is made and what all conecpts of physics goes into this. Please watch
 out my [medium blog](https://medium.com/@rahulraja) and my [personal blog](http://rahulrj.github.io/).
-
-
-## Demo
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.youtube.com/watch?v=lzkK9rtabZw"><img src="http://img.youtube.com/vi/lzkK9rtabZw/maxresdefault.jpg" border="10" /></a>
-
 
 
 ## Next Release
