@@ -5,6 +5,13 @@ This demo emulates the animation of the circles which are present in Apple Music
 app doesn't come with such animations. So i tried my hands and made it for Android. The initial version of the animation
 covers the most important functionalities of that.
 
+## GIF demo
+The above video link is a high resolution demo for the animation. In case you dont want to redirect to that demo, here is a
+GIF demo that will play in here, but it has a low frame rate. I didn't find any tool to convert a high quality video into
+a GIF with a high frame rate.
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ![](animation_demo.gif)
+
 ## How is this made?
 Few libraies that helped me enormously in making this animation is
 1. [Box2d](https://github.com/erincatto/Box2D)  by Erin Catto. Although this library is very huge and it covers all the
@@ -27,13 +34,6 @@ out my [medium blog](https://medium.com/@rahulraja) and my [personal blog](http:
 ## Demo
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <a href="https://www.youtube.com/watch?v=lzkK9rtabZw"><img src="http://img.youtube.com/vi/lzkK9rtabZw/maxresdefault.jpg" border="10" /></a>
 
-
-## GIF demo
-The above video link is a high resolution demo for the animation. In case you dont want to redirect to that demo, here is a
-GIF demo that will play in here, but it has a low frame rate. I didn't find any tool to convert a high quality video into
-a GIF with a high frame rate.
-
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ![](animation_demo.gif)
 
 
 ## Next Release
